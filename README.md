@@ -1,4 +1,7 @@
-# Audex
+# Audex (modified fork)
+
+> **This is a modified copy of [leo-alvarenga/audex](https://github.com/leo-alvarenga/audex).**
+> It contains my own changes on top of the original project — see the [commit history](https://github.com/otenmas/audex/commits) for what was modified. All credit for the original work goes to [Leonardo A. Alvarenga](https://github.com/leo-alvarenga). Licensed under the same [MIT License](LICENSE).
 
 A command-line tool (and optional web UI) for transcoding lossless audio and keeping your library organized. It converts FLAC files to AAC, fetches metadata from MusicBrainz, embeds cover art, grabs synced lyrics, and can sort everything into a tidy `Artist/Album/Track` folder layout.
 
