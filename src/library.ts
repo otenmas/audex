@@ -13,7 +13,17 @@ export interface LibraryTrack {
   albumArtist: string | null;
   title: string | null;
   track: number | null;
+  disc: number | null;
+  totalDiscs: number | null;
   year: number | null;
+  date: string | null;
+  originalYear: number | null;
+  catalogNumber: string | null;
+  mbReleaseId: string | null;
+  codec: string | null;
+  bitrate: number | null;
+  sampleRate: number | null;
+  bitDepth: number | null;
   genre: string | null;
   duration: number | null;
   fileSize: number | null;
@@ -29,7 +39,17 @@ interface TrackRow {
   album_artist: string | null;
   title: string | null;
   track: number | null;
+  disc: number | null;
+  total_discs: number | null;
   year: number | null;
+  date: string | null;
+  original_year: number | null;
+  catalog_number: string | null;
+  mb_release_id: string | null;
+  codec: string | null;
+  bitrate: number | null;
+  sample_rate: number | null;
+  bit_depth: number | null;
   genre: string | null;
   duration: number | null;
   file_size: number | null;
@@ -58,7 +78,17 @@ function toTrack(r: TrackRow): LibraryTrack {
     albumArtist: r.album_artist,
     title: r.title,
     track: r.track,
+    disc: r.disc,
+    totalDiscs: r.total_discs,
     year: r.year,
+    date: r.date,
+    originalYear: r.original_year,
+    catalogNumber: r.catalog_number,
+    mbReleaseId: r.mb_release_id,
+    codec: r.codec,
+    bitrate: r.bitrate,
+    sampleRate: r.sample_rate,
+    bitDepth: r.bit_depth,
     genre: r.genre,
     duration: r.duration,
     fileSize: r.file_size,
@@ -107,7 +137,16 @@ export function openLibrary(): Database.Database {
       album_artist TEXT,
       title TEXT,
       track INTEGER,
+      disc INTEGER,
+      total_discs INTEGER,
       year INTEGER,
+      date TEXT,
+      original_year INTEGER,
+      catalog_number TEXT,
+      codec TEXT,
+      bitrate INTEGER,
+      sample_rate INTEGER,
+      bit_depth INTEGER,
       genre TEXT,
       duration REAL,
       file_size INTEGER,
@@ -116,10 +155,25 @@ export function openLibrary(): Database.Database {
     )
   `);
 
-  try {
-    db.exec("ALTER TABLE tracks ADD COLUMN library_root TEXT");
-  } catch {
-    // already present — no-op
+  const newColumns: [string, string][] = [
+    ["library_root", "TEXT"],
+    ["disc", "INTEGER"],
+    ["total_discs", "INTEGER"],
+    ["date", "TEXT"],
+    ["original_year", "INTEGER"],
+    ["catalog_number", "TEXT"],
+    ["mb_release_id", "TEXT"],
+    ["codec", "TEXT"],
+    ["bitrate", "INTEGER"],
+    ["sample_rate", "INTEGER"],
+    ["bit_depth", "INTEGER"],
+  ];
+  for (const [col, type] of newColumns) {
+    try {
+      db.exec(`ALTER TABLE tracks ADD COLUMN ${col} ${type}`);
+    } catch {
+      // already present — no-op
+    }
   }
 
   db.exec(`
@@ -138,9 +192,9 @@ export function upsertTrack(
 ): void {
   db.prepare(
     `INSERT OR REPLACE INTO tracks
-       (path, artist, album, album_artist, title, track, year, genre, duration, file_size, mtime, library_root)
+       (path, artist, album, album_artist, title, track, disc, total_discs, year, date, original_year, catalog_number, mb_release_id, codec, bitrate, sample_rate, bit_depth, genre, duration, file_size, mtime, library_root)
      VALUES
-       (@path, @artist, @album, @albumArtist, @title, @track, @year, @genre, @duration, @fileSize, @mtime, @libraryRoot)`,
+       (@path, @artist, @album, @albumArtist, @title, @track, @disc, @totalDiscs, @year, @date, @originalYear, @catalogNumber, @mbReleaseId, @codec, @bitrate, @sampleRate, @bitDepth, @genre, @duration, @fileSize, @mtime, @libraryRoot)`,
   ).run({
     path: track.path,
     artist: track.artist,
@@ -148,7 +202,17 @@ export function upsertTrack(
     albumArtist: track.albumArtist,
     title: track.title,
     track: track.track,
+    disc: track.disc,
+    totalDiscs: track.totalDiscs,
     year: track.year,
+    date: track.date,
+    originalYear: track.originalYear,
+    catalogNumber: track.catalogNumber,
+    mbReleaseId: track.mbReleaseId,
+    codec: track.codec,
+    bitrate: track.bitrate,
+    sampleRate: track.sampleRate,
+    bitDepth: track.bitDepth,
     genre: track.genre,
     duration: track.duration,
     fileSize: track.fileSize,

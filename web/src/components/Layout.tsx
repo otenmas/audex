@@ -29,7 +29,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  className={({ isActive }) =>
+                  className={({ isActive }: { isActive: boolean }) =>
                     `rounded px-3 py-2 text-sm ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`
                   }
                 >

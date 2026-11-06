@@ -30,6 +30,8 @@ The database has two tables.
 | `title` | TEXT | Track title |
 | `track` | INTEGER | Track number |
 | `year` | INTEGER | Release year |
+| `catalog_number` | TEXT | Release catalog number |
+| `mb_release_id` | TEXT | MusicBrainz release ID |
 | `genre` | TEXT | Genre |
 | `duration` | REAL | Duration in seconds |
 | `file_size` | INTEGER | File size in bytes |
@@ -65,11 +67,15 @@ The `--library <path>` option narrows results to tracks indexed from a specific 
 ```
 Artist/
   Album/
-    01. Track Title.flac
-    02. Another Track.flac
+    01 - Track Title.flac
+    02 - Another Track.flac
 ```
 
+Track files are named `<track number> - <title>`. For multi-disc albums the track number is prefixed with the disc number, e.g. `1.03 - Track Title.flac` (disc 1, track 3) or `2.05 - Another Track.flac` (disc 2, track 5).
+
 The folder names are derived from the file's tags. Unknown values fall back to `Unknown Artist` or `Unknown Album`. Characters that aren't safe in filenames (`/ \ : * ? " < > |`) are replaced with `_`.
+
+Different releases of the same album (e.g. separate pressings or remasters sharing artist, album, and year) are kept in separate folders. Releases are told apart by their MusicBrainz release ID, falling back to the catalog number when the ID isn't tagged. Re-index with `--force-index` after tagging changes so the organizer sees the latest release tags.
 
 If a file would end up at the same path it started at, it's left alone.
 

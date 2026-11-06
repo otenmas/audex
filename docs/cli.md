@@ -233,6 +233,8 @@ audex library organize <input> [output] [options]
 
 Rearranges audio files into an `Artist/Album/NN. Title.ext` folder layout based on their tags. Without an `output` dir, files are moved in place inside `input`. With `output`, they're moved (or copied) there.
 
+Different releases of the same album are organized into separate folders, told apart by MusicBrainz release ID (falling back to catalog number).
+
 | Flag | Description |
 |------|-------------|
 | `--copy` | Copy files instead of moving them |

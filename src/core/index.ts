@@ -33,6 +33,7 @@ export async function indexLibrary(
 
       const mm = await parseFile(file).catch(() => null);
       const c = mm?.common;
+      const f = mm?.format;
 
       upsertTrack(db, {
         path: file,
@@ -41,9 +42,19 @@ export async function indexLibrary(
         albumArtist: c?.albumartist ?? null,
         title: c?.title ?? null,
         track: c?.track?.no ?? null,
+        disc: c?.disk?.no ?? null,
+        totalDiscs: c?.disk?.of ?? null,
         year: c?.year ?? null,
+        date: c?.date ?? null,
+        originalYear: c?.originalyear ?? null,
+        catalogNumber: Array.isArray(c?.catalognumber) ? c.catalognumber[0] ?? null : c?.catalognumber ?? null,
+        mbReleaseId: c?.musicbrainz_albumid ?? null,
+        codec: f?.codec ?? null,
+        bitrate: f?.bitrate ? Math.round(f.bitrate) : null,
+        sampleRate: f?.sampleRate ?? null,
+        bitDepth: f?.bitsPerSample ?? null,
         genre: c?.genre?.[0] ?? null,
-        duration: mm?.format.duration ?? null,
+        duration: f?.duration ?? null,
         fileSize: size,
         mtime,
         libraryRoot: inputDir,
