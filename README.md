@@ -3,11 +3,11 @@
 > **This is a modified copy of [leo-alvarenga/audex](https://github.com/leo-alvarenga/audex).**
 > It contains my own changes on top of the original project — see the [commit history](https://github.com/otenmas/audex/commits) for what was modified. All credit for the original work goes to [Leonardo A. Alvarenga](https://github.com/leo-alvarenga). Licensed under the same [MIT License](LICENSE).
 
-A command-line tool (and optional web UI) for transcoding lossless audio and keeping your library organized. It converts FLAC files to AAC, fetches metadata from MusicBrainz, embeds cover art, grabs synced lyrics, and can sort everything into a tidy `Artist/Album/Track` folder layout.
+A command-line tool (and optional web UI) for transcoding audio and keeping your library organized. It converts FLAC, WMA, and MPC files to AAC, fetches metadata from MusicBrainz, embeds cover art, grabs synced lyrics, and can sort everything into a tidy `Artist/Album/Track` folder layout.
 
 ## What it does
 
-- **Convert** FLAC files to M4A (AAC 256kbps) while mirroring your folder structure. If a file can't be transcoded, Audex copies the original FLAC so nothing gets lost.
+- **Convert** FLAC, WMA, and MPC files to M4A (AAC 256kbps) while mirroring your folder structure. If a file can't be transcoded, Audex copies the original file so nothing gets lost.
 - **Tag** audio files (FLAC, M4A, MP3) by querying MusicBrainz and AcoustID, embedding cover art when available. Supports a dry-run preview (`--plan`) before touching anything.
 - **Fetch lyrics** and write timestamped `.lrc` files next to your audio.
 - **Sync** one directory into another, copying only what's missing or changed.
@@ -50,7 +50,7 @@ node dist/cli.js <command>
 ## Quick start
 
 ```bash
-# Transcode a folder of FLACs to M4A
+# Transcode a folder of FLAC/WMA/MPC files to M4A
 audex convert ~/music/flac ~/music/aac
 
 # Tag the resulting files (dry-run first)

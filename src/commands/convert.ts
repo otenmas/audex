@@ -8,9 +8,9 @@ export function convertCommand(): Command {
   return new Command()
     .name("convert")
     .description(
-      "Transcode FLAC files to m4a (AAC), mirroring the folder structure into the output dir",
+      "Transcode FLAC/WMA/MPC files to m4a (AAC), mirroring the folder structure into the output dir",
     )
-    .argument("<input>", "input directory to scan for FLAC files")
+    .argument("<input>", "input directory to scan for audio files")
     .argument("<output>", "output directory (must already exist)")
     .option(
       "--auto-tag",
@@ -48,14 +48,14 @@ export function convertCommand(): Command {
           );
 
           if (result.plan) {
-            console.log(`Would convert ${result.stats.planned} FLAC file(s):`);
+            console.log(`Would convert ${result.stats.planned} file(s):`);
             for (const line of result.plan) console.log(line);
           } else if (
             result.stats.converted === 0 &&
             result.stats.copied === 0 &&
             result.stats.skipped === 0
           ) {
-            console.log(`No FLAC files found in ${inputDir}`);
+            console.log(`No convertible audio files found in ${inputDir}`);
           } else {
             if (result.errors.length > 0) {
               for (const e of result.errors) console.warn(e);

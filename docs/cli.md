@@ -16,9 +16,9 @@ Run `audex --help` or `audex <command> --help` at any time to see usage inline.
 audex convert <input> <output> [options]
 ```
 
-Scans `input` for `.flac` files and transcodes each one to AAC (256kbps, 44.1kHz, stereo) as `.m4a`, writing results into `output` with the same folder structure. The output directory must already exist.
+Scans `input` for `.flac`, `.wma`, and `.mpc` files and transcodes each one to AAC (256kbps, 44.1kHz, stereo) as `.m4a`, writing results into `output` with the same folder structure. The output directory must already exist.
 
-If a file fails to convert, Audex copies the original FLAC instead of skipping it — you won't silently lose anything.
+If a file fails to convert, Audex copies the original file instead of skipping it — you won't silently lose anything.
 
 **Options**
 

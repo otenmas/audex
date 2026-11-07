@@ -24,7 +24,7 @@ The server listens on `127.0.0.1` only — it's intended for local use.
 
 | Page | Path | What it does |
 |------|------|--------------|
-| Convert | `/convert` | Transcode FLAC files to M4A |
+| Convert | `/convert` | Transcode FLAC/WMA/MPC files to M4A |
 | Tag | `/tag` | Tag audio files with metadata from MusicBrainz |
 | Sync | `/sync` | Mirror one directory into another |
 | Lyrics | `/lyrics` | Fetch `.lrc` files for audio files |
@@ -63,7 +63,7 @@ data: {"type":"error","message":"..."}\n\n
 
 ### POST /api/convert
 
-Transcodes FLAC files to M4A.
+Transcodes FLAC, WMA, and MPC files to M4A.
 
 **Request body**
 

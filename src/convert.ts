@@ -8,12 +8,17 @@ import { fileExists } from "./fs.js";
 import { runWithProgress } from "./progress.js";
 import type { OperationResult, ProgressCallback, TrackMeta } from "./types.js";
 
+export const CONVERTIBLE_EXTS = [".flac", ".wma", ".mpc"];
+
 export function destPath(
   inputDir: string,
   outDir: string,
   file: string,
 ): string {
-  return join(outDir, relative(inputDir, file).replace(/\.flac$/i, ".m4a"));
+  return join(
+    outDir,
+    relative(inputDir, file).replace(/\.(flac|wma|mpc)$/i, ".m4a"),
+  );
 }
 
 export async function convert(
@@ -22,7 +27,7 @@ export async function convert(
   opts: { autoTag: boolean; dryRun: boolean; includeLyrics: boolean },
   onProgress?: ProgressCallback,
 ): Promise<OperationResult> {
-  const files = await scanFiles(inputDir, [".flac"]);
+  const files = await scanFiles(inputDir, CONVERTIBLE_EXTS);
 
   if (files.length === 0) {
     return {
@@ -35,7 +40,7 @@ export async function convert(
   if (opts.dryRun) {
     const lines = files.map((f) => {
       const rel = relative(inputDir, f);
-      return `  ${rel} -> ${rel.replace(/\.flac$/i, ".m4a")}`;
+      return `  ${rel} -> ${rel.replace(/\.(flac|wma|mpc)$/i, ".m4a")}`;
     });
     return { ok: true, stats: { planned: files.length }, errors: [], plan: lines };
   }
